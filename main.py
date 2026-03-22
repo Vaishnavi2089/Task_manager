@@ -2,6 +2,7 @@ from task_manager import TaskManager
 
 def main():
     manager = TaskManager()
+    manager.load_tasks()   # Load saved tasks at start
 
     while True:
         print("\n==== TASK MANAGER ====")
@@ -16,24 +17,33 @@ def main():
         if choice == "1":
             title = input("Enter task title: ")
             manager.add_task(title)
+            manager.save_tasks()
 
         elif choice == "2":
             manager.view_tasks()
 
         elif choice == "3":
-            task_id = int(input("Enter task ID: "))
-            manager.update_task(task_id)
+            try:
+                task_id = int(input("Enter task ID: "))
+                manager.update_task(task_id)
+                manager.save_tasks()
+            except ValueError:
+                print("❌ Please enter a valid number!")
 
         elif choice == "4":
-            task_id = int(input("Enter task ID: "))
-            manager.delete_task(task_id)
+            try:
+                task_id = int(input("Enter task ID: "))
+                manager.delete_task(task_id)
+                manager.save_tasks()
+            except ValueError:
+                print("❌ Please enter a valid number!")
 
         elif choice == "5":
-            print("👋 Exiting...")
+            print("👋 Exiting... Goodbye!")
             break
 
         else:
-            print("❌ Invalid choice!")
+            print("❌ Invalid choice! Please try again.")
 
 if __name__ == "__main__":
     main()
